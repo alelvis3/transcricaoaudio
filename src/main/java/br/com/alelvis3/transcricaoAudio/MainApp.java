@@ -37,7 +37,6 @@ import com.google.protobuf.ByteString;
 
 import net.miginfocom.swing.MigLayout;
 
-
 public class MainApp extends JFrame {
 
 	/**
@@ -46,10 +45,10 @@ public class MainApp extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
-	private JTextField campoCaminhoArquivo; // Campo de texto para o caminho do arquivo
-	private JTextArea areaTranscricao; // Área de texto para exibir a transcrição
-	private JButton botaoEscolherArquivo; // Botão para escolher o arquivo
-	private JButton botaoTranscrever; // Botão para transcrever
+	private JTextField campoCaminhoArquivo;
+	private JTextArea areaTranscricao;
+	private JButton botaoEscolherArquivo;
+	private JButton botaoTranscrever;
 
 	public MainApp() {
 		super("Transcrição de Áudio");
@@ -60,7 +59,6 @@ public class MainApp extends JFrame {
 		// Layout usando MigLayout
 		setLayout(new MigLayout("", "[grow,fill]", "[][grow,fill][]"));
 
-		// Componentes
 		campoCaminhoArquivo = new JTextField();
 		botaoEscolherArquivo = new JButton("Escolher Arquivo");
 		areaTranscricao = new JTextArea();
@@ -80,16 +78,13 @@ public class MainApp extends JFrame {
 		botaoEscolherArquivo.addActionListener(this::chooseFileAction);
 		botaoTranscrever.addActionListener(this::transcribeAction);
 
-		setVisible(true); // Torna a janela visível
+		setVisible(true);
 	}
 
 	private void chooseFileAction(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de Áudio MP3", "mp3"); // Filtra
-																										// os
-																										// tipos
-																										// de
-																										// arquivo
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de Áudio MP3", "mp3"); // Filtra os tipos
+																										// de arquivo
 		fileChooser.setFileFilter(filter);
 		int returnVal = fileChooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -141,16 +136,9 @@ public class MainApp extends JFrame {
 		ByteString audioBytes = ByteString.copyFrom(data);
 
 		// Configurações da requisição
-		RecognitionConfig config = RecognitionConfig.newBuilder().setEncoding(AudioEncoding.MP3) // Ajuste isso
-																									// conforme o
-																									// formato do
-																									// seu áudio
-																									// (LINEAR16 é
-																									// comum para
-																									// WAV)
+		RecognitionConfig config = RecognitionConfig.newBuilder().setEncoding(AudioEncoding.MP3)
 				.setSampleRateHertz(16000) // Ajuste isso para a taxa de amostragem do seu áudio
-				.setLanguageCode("pt-BR") // Código do idioma
-				.build();
+				.setLanguageCode("pt-BR").build();
 		RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(audioBytes).build();
 
 		// Autenticação
@@ -178,7 +166,6 @@ public class MainApp extends JFrame {
 				return transcricao.toString();
 			}
 		} catch (IOException e) {
-			// Propaga a IOException para ser tratada no método transcribeAction
 			throw e;
 		}
 	}
