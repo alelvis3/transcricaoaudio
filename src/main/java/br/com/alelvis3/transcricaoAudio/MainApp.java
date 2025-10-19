@@ -60,7 +60,7 @@ public class MainApp extends JFrame {
 		// Layout usando MigLayout
 		setLayout(new MigLayout("", "[grow,fill]", "[][grow,fill][]"));
 
-		// Componentes
+		// Componentes da janela
 		campoCaminhoArquivo = new JTextField();
 		botaoEscolherArquivo = new JButton("Escolher Arquivo");
 		areaTranscricao = new JTextArea();
